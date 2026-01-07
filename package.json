@@ -1,0 +1,14 @@
+{
+  "name": "bingo-server",
+  "version": "1.0.0",
+  "description": "Bingo with QR",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "qrcode": "^1.5.4",
+    "uuid": "^9.0.1"
+  }
+}

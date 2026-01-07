@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bingo TV</title>
+<style>
+body {
+  background:#111;
+  color:white;
+  text-align:center;
+  font-family:Arial;
+}
+#number { font-size:120px; margin:20px; }
+.ball {
+  width:40px;height:40px;
+  border-radius:50%;
+  background:white;color:black;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin:4px;
+}
+</style>
+</head>
+<body>
+
+<h1>BINGO</h1>
+<div id="number">–</div>
+<button onclick="draw()">ΚΛΗΡΩΣΗ</button>
+
+<h3>Κληρωμένοι</h3>
+<div id="drawn"></div>
+
+<h3>Νέο κουπόνι</h3>
+<button onclick="createTicket()">ΔΗΜΙΟΥΡΓΙΑ</button><br><br>
+<img id="qr" width="200">
+
+<script>
+let drawn = [];
+
+function draw() {
+  if (drawn.length === 75) return;
+  let n;
+  do {
+    n = Math.floor(Math.random()*75)+1;
+  } while (drawn.includes(n));
+  drawn.push(n);
+  document.getElementById("number").innerText = n;
+
+  const b = document.createElement("div");
+  b.className="ball";
+  b.innerText=n;
+  document.getElementById("drawn").appendChild(b);
+}
+
+async function createTicket() {
+  const res = await fetch("/create-ticket",{method:"POST"});
+  const data = await res.json();
+  document.getElementById("qr").src = data.qr;
+}
+</script>
+
+</body>
+</html>
